@@ -1,7 +1,7 @@
 table 1 users
   id, name, phone
 table 2 menus
-  id, FK(resto id), name, price, description
+  id, FK(resto id), name, image url, price, description
 table 3 restaurants
   id, name, address, phone, city, province, postal code, country  
 table 4 orders
