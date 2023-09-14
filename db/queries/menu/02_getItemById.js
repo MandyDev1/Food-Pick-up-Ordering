@@ -1,6 +1,6 @@
 const db = require('../../connection');
 
-const getItemById = (db, id) => {
+const getItemById = (id) => {
   return db.query(`SELECT * FROM menus
   WHERE id = $1;`, [id]);
 }
