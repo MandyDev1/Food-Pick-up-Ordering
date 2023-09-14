@@ -1,8 +1,7 @@
 const db = require('../../connection');
 
-const getAllMenuItems = (db) => {
+const getAllMenuItems = () => {
   return db.query(`SELECT * FROM menus
-  ORDER BY id ASC
   LIMIT 16;`)
 };
 

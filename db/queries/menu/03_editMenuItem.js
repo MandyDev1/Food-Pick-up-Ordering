@@ -1,13 +1,58 @@
 const db = require('../../connection');
 
-const editMenuItem = (menuId, newName, newImgURL, newDescription, newCategory, newPrice) => {
-  return db.query(`
-    UPDATE menus
-    SET name = $2, imgURL = $3, description = $4, category = $5, price = $6
-    WHERE id = $1
-    RETURNING *;
-  `, [menuId, newName, newImgURL, newDescription, newCategory, newPrice]);
-}
+const editMenuItem = (menuId, updateFields) => {
+  const { name, imgURL, description, category, price } = updateFields;
+  const queryParams = [menuId];
+  let queryString = `UPDATE menus SET `;
+  let hasFieldsToUpdate = false;
+
+  if (name !== undefined) {
+    queryParams.push(name);
+    queryString += `name = $${queryParams.length}, `;
+    hasFieldsToUpdate = true;
+  }
+
+  if (imgURL !== undefined) {
+    queryParams.push(imgURL);
+    queryString += `imgURL = $${queryParams.length}, `;
+    hasFieldsToUpdate = true;
+  }
+
+  if (description !== undefined) {
+    queryParams.push(description);
+    queryString += `description = $${queryParams.length}, `;
+    hasFieldsToUpdate = true;
+  }
+
+  if (category !== undefined) {
+    queryParams.push(category);
+    queryString += `category = $${queryParams.length}, `;
+    hasFieldsToUpdate = true;
+  }
+
+  if (price !== undefined) {
+    queryParams.push(price);
+    queryString += `price = $${queryParams.length}, `;
+    hasFieldsToUpdate = true;
+  }
+
+  if (hasFieldsToUpdate) {
+    queryString = queryString.slice(0, -2); // Remove the last ", "
+    queryString += ` WHERE id = $1 RETURNING *;`;
+  } else {
+    throw new Error('No fields to update.');
+  }
+
+  console.log(queryString, queryParams);
+
+  return db
+    .query(queryString, queryParams)
+    .then((res) => res.rows)
+    .catch((err) => {
+      console.error(err.message);
+      throw new Error('Database error.');
+    });
+};
 
 module.exports = { editMenuItem }
 
