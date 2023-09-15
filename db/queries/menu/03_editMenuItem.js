@@ -2,7 +2,7 @@ const db = require('../../connection');
 
 const editMenuItem = (menuId, updateFields) => {
   const { name, imgURL, description, category, price } = updateFields;
-  const queryParams = [menuId];
+  let queryParams = [menuId];
   let queryString = `UPDATE menus SET `;
   let hasFieldsToUpdate = false;
 
