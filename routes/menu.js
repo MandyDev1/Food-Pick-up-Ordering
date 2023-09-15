@@ -13,6 +13,7 @@ const { editMenuItem } = require('../db/queries/menu/03_editMenuItem');
 const { addMenuItem } = require('../db/queries/menu/04_addMenuItem');
 const { deleteMenuItem } = require('../db/queries/menu/05_deleteMenuItem');
 const db = require('../db/connection');
+const path = require('path');
 
 // USER ROUTES
 
@@ -22,7 +23,8 @@ router.get('/', (req, res) => {
   getAllMenuItems()
   .then((menuItems) => {
     // Render the view to display the list of menu items
-    res.render('menu/list', { menuItems }); // Need to create the 'menu/list' view later
+    // res.render('menu/list', { menuItems }); // Need to create the 'menu/list' view later
+    res.sendFile(path.join(__dirname, '../views/index.html'));
   })
   .catch((err) => {
     console.error(err);

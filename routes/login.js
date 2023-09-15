@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const loginUser = require('../db/queries/login/login');
+const path = require('path');
 
 // Route for login submission
-router.post('/login', (req, res) => {
+router.post('/', (req, res) => {
   const { email, password } = req.body;
 
   loginUser(email, password)
@@ -17,12 +18,12 @@ router.post('/login', (req, res) => {
 });
 
 // Route to go to login page
-router.get('/login', (req, res) => {
+router.get('/', (req, res) => {
   if (req.session.userId) {
     return res.redirect('/');
   }
 
-  res.render('login');
+  res.sendFile(path.join(__dirname, '../views/login.html'));
 });
 
 module.exports = router;
