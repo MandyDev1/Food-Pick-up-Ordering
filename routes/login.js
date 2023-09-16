@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const loginUser = require('../db/queries/login/login');
+const { loginUser } = require('../db/queries/login/login');
 const path = require('path');
 
 // Route for login submission
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     return res.redirect('/');
   }
 
-  res.sendFile(path.join(__dirname, '../views/login.html'));
+  res.render('login');
 });
 
 module.exports = router;
