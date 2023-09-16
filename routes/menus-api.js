@@ -7,12 +7,12 @@
 
 const express = require('express');
 const router = express.Router();
-const userQueries = require('../db/queries/users/getUser');
+const menuQueries = require('../db/queries/menu/01_getAllMenuItems');
 
 router.get('/', (req, res) => {
-  userQueries.getUsers()
-    .then(users => {
-      res.json({ users });
+  menuQueries.getAllMenuItems()
+    .then(menus => {
+      res.json({ menus });
     })
     .catch(err => {
       res
