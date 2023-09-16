@@ -118,11 +118,18 @@ a, a:hover {
   color: black
 }
 
-.row {
+.row-main .row {
   transition: all .2s ease-in-out;
 }
-.row:hover {
+.row-main .row:hover {
   transform: scale(1.1);
+}
+
+.login-error-message {
+  color: red;
+  border: 2px solid red;
+  padding: 0.5em;
+  text-align: center;
 }
 
 // .row{
