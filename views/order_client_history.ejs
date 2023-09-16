@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Food Ordering Pick Up - Home Page</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="../styles/nav.css" type="text/css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="Your Logo">
+        </div>
+        <div class="nav-username">username@email.com</div>
+        <button class="login-signup-button" id="logout">Log Out</button>
+    </nav>
+</header>
+
+<main class="container">
+  <div class="main-order">
+    <h3>My Previous Order List</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Delete option</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Sample row for a food item -->
+        <tr>
+          <td>Food 1</td>
+          <td>
+            <div class="dropdown-menu" id="dropdown-menu-order">
+              <select>
+                  <option value="option1">1</option>
+                  <option value="option2">2</option>
+                  <option value="option3">3</option>
+                  <option value="option3">4</option>
+                  <option value="option3">5</option>
+              </select>
+            </div>
+          </td>
+          <td>$15.00</td>
+          <td><span class="delete-button" onclick="deleteRow(this)">Delete</span></td>
+        </tr>
+        <tr>
+          <td>Food 2</td>
+          <td>
+            <div class="dropdown-menu" id="dropdown-menu-order">
+              <select>
+                  <option value="option1">1</option>
+                  <option value="option2">2</option>
+                  <option value="option3">3</option>
+                  <option value="option3">4</option>
+                  <option value="option3">5</option>
+              </select>
+            </div>
+          </td>
+          <td>$5.00</td>
+          <td><span class="delete-button" onclick="deleteRow(this)">Delete</span></td>
+        </tr>
+        <tr>
+          <td>Food 3</td>
+          <td>
+            <div class="dropdown-menu" id="dropdown-menu-order">
+              <select>
+                  <option value="option1">1</option>
+                  <option value="option2">2</option>
+                  <option value="option3">3</option>
+                  <option value="option3">4</option>
+                  <option value="option3">5</option>
+              </select>
+            </div>
+          </td>
+          <td>$10.00</td>
+          <td><span class="delete-button" onclick="deleteRow(this)">Delete</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="total-label">Total:</td>
+          <td colspan="2" class="total-price">$30.00</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <button class="order-button" id="order-now-button">Order Now</button>
+
+</main>
+
+<!-- Delet row from my order
+
+function deleteRow(button) {
+  var row = button.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+  updateTotalPrice();
+}
+
+-------Total price------
+
+function updateTotalPrice() {
+  var total = 0;
+  var prices = document.querySelectorAll('.total-price-calculation');
+
+  prices.forEach(function(price) {
+    total += parseFloat(price.innerText.replace('$', ''));
+  });
+
+  document.querySelector('.total-price').innerText = '$' + total.toFixed(2);
+}
+
+-->
+
+</body>
+
+</html>
