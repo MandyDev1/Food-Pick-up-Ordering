@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require("cookie-session");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -25,19 +26,40 @@ app.use(
   })
 );
 app.use(express.static('public'));
+app.use(express.json());
+
+app.use(cookieSession({
+  name: "session",
+  keys: ["key1", "key2"],
+  maxAge: 1 * 10 * 60 * 1000,
+}));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
+const menuApiRoutes = require('./routes/menus-api');
+const singleMenuApiRoutes = require('./routes/singleMenu-api');
 const usersRoutes = require('./routes/users');
+const menusRoutes = require('./routes/menus');
+const loginRoutes = require('./routes/login');
+const logoutRoutes = require('./routes/logout');
+const registerRoutes = require('./routes/registration');
+const orderRoutes = require('./routes/cart');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
+app.use('/api/menus', menuApiRoutes);
+app.use('/api/menus/', singleMenuApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/menus', menusRoutes);
+app.use('/login', loginRoutes);
+app.use('/logout', logoutRoutes);
+app.use('/register', registerRoutes);
+app.use('/cart', orderRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
