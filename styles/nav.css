@@ -1,3 +1,5 @@
+/*********************Main page****************/
+
 body {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
@@ -31,6 +33,16 @@ nav {
 
 .login-signup{
   margin-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.nav-username {
+  color: #EA9393;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .login-signup-button{
@@ -69,7 +81,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   margin: 50px;
-  height: 30vh;
+  height: 35vh;
 }
 
 .row{
@@ -89,6 +101,21 @@ nav {
   justify-content: space-between;
   height: 100%;
   width: 100%;
+}
+
+.food-name{
+  margin-bottom: 10px;
+}
+
+.food-name a {
+  font-weight: bold;
+  color: #B26B6B;
+  text-decoration: none;
+}
+
+.food-name a:hover {
+  color: #3c72fa;
+  text-decoration: none;
 }
 
 .food-photo{
@@ -156,7 +183,7 @@ nav {
   color: #ffffff;
 }
 
-/***************************/
+/********Log In page*******************/
 
 .login-page {
   display: flex;
@@ -192,3 +219,49 @@ nav {
   margin-left: 600px;
   margin-top: 50px;
 }
+
+/*************Order Client page********************/
+
+
+table {
+  width: 75%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color:  #D9D9D9;
+}
+
+.delete-button {
+  cursor: pointer;
+  color: red;
+}
+
+.delete-button:hover {
+  font-weight: bold;
+}
+
+.total-label {
+  text-align: right;
+}
+
+.total-price {
+  text-align: left;
+}
+
+.main-order{
+  margin-left: 50px;
+}
+#order-now-button{
+  margin-left: 850px;
+  margin-top: 50px;
+}
+
+
