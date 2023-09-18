@@ -20,6 +20,7 @@ const path = require('path');
 
 // Retrieve a list of menus
 router.get('/', (req, res) => {
+
   getUserById(req.session.userId)
     .then((data) => {
       const templateVars = { user: data };
@@ -47,6 +48,7 @@ router.get('/:id', (req, res) => {
   const itemId = req.params.id; // Get the menu item ID from the URL
   const user = req.user;
 
+  
   // Call the function to get the menu item by ID
   getItemById(itemId)
     .then((menuItem) => {

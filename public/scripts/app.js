@@ -30,6 +30,7 @@ const fetchData = (data) => {
                     </select>
                   </div>
                 </div>
+                <div class="quantity">Price ${menu.price}</div>
                 <button class="order-button" type="submit">
                   <!--<a class="register-login order" href="/order"> -->
                   Order
@@ -43,6 +44,7 @@ const fetchData = (data) => {
 
   }
 };
+
 $(() => {
 
 $.ajax({
@@ -50,18 +52,11 @@ $.ajax({
   url: '/api/menu'
 })
 .then((response) => {
-
   const data = response.menus.rows;
   // const firstPageData = response.menus.slice(0,15);
   // Load Data to Page
   fetchData(data);
-
-  $(document).on('click', '.food-photo', function (event) {
-    event.preventDefault();  // Prevent default behavior to stop the link from navigating
-    window.location.href = $(this).attr('href');  // Redirect to the menu details page for the selected menu item
-  });
-  
-  })
+})
   .catch(err => {
     console.log('error in getting menus');
   })
