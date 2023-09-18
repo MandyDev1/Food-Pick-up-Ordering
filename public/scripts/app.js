@@ -10,8 +10,8 @@ const fetchData = (data) => {
     const $menuItem = $(`
         <div class="row">
         <div class="column">
-<h6>${menu.name}</h6>
-            <a class="food-photo" href="#"><img src="${menu.imgurl}" alt="${menu.category}"></a>
+      <h6>${menu.name}</h6>
+            <a class="food-photo" href="/menu/${menu.id}"><img src="${menu.imgurl}" alt="${menu.category}"></a>
             <form class="food-details" method="POST" action="/cart">
                 <div class="food-quantity">
                   <div class="quantity">Quantity:</div>
@@ -53,14 +53,17 @@ $.ajax({
 
   const data = response.menus.rows;
   // const firstPageData = response.menus.slice(0,15);
-
-
-
-
   // Load Data to Page
   fetchData(data);
+
+  $(document).on('click', '.food-photo', function (event) {
+    event.preventDefault();  // Prevent default behavior to stop the link from navigating
+    window.location.href = $(this).attr('href');  // Redirect to the menu details page for the selected menu item
+  });
+  
   })
   .catch(err => {
     console.log('error in getting menus');
   })
+
 });

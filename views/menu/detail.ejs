@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Food Ordering Pick Up - Home Page</title>
+  <title>Food Ordering Pick Up - Menu details page</title>
 
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
@@ -23,7 +23,8 @@
   <!--<link rel="stylesheet" href="../styles/nav.css" type="text/css" /> -->
 
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
+  <script defer src="/scripts/app-detail.js"></script>-->
+
 </head>
 
 <body>
@@ -63,31 +64,19 @@
   </header>
 
 <main class="main-container">
-  <!-- <div class="menu-category">
-    <h5><span></span>Category</h5>
-  </div> -->
-  <div class="row-container">
-    <div class="row-main">
 
+  <div class="menu-details">
+    <h1>Menu Details</h1>
+
+    <div>
+      <h2 id="menuName"></h2>
+      <p id="menuDescription"></p>
+      <p id="menuPrice"></p>
     </div>
 
-    <!-- End of pagination-->
-    <!-- Pagination - Using maximum 16 items per page -->
-    <div aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous" id="Previous">
-            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next" id="Next">
-            <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-          </a>
-        </li>
-      </ul>
-    </div>
   </div>
+
+  <a href="/menu">Go back to Main menu</a>
 
 </main>
 

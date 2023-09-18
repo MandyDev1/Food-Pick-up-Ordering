@@ -45,6 +45,7 @@ router.get('/', (req, res) => {
 // View detailed information about a specific menu item
 router.get('/:id', (req, res) => {
   const itemId = req.params.id; // Get the menu item ID from the URL
+  const user = req.user;
 
   // Call the function to get the menu item by ID
   getItemById(itemId)
@@ -52,7 +53,7 @@ router.get('/:id', (req, res) => {
       if (!menuItem) {
         res.status(404).send('Menu item not found');
       } else {
-        res.render('menu/detail', { menuItem }); // Need to create the 'menu/detail' view later
+        res.render('menu/detail', { menuItem, user }); // Need to create the 'menu/detail' view later
       }
     })
     .catch((err) => {
