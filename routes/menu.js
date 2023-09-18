@@ -6,15 +6,14 @@
 
 const express = require('express');
 const router = express.Router();
-const { cookie } = require('express/lib/response');
 const { getAllMenuItems } = require('../db/queries/menu/01_getAllMenuItems');
 const { getItemById } = require('../db/queries/menu/02_getItemById');
 const { editMenuItem } = require('../db/queries/menu/03_editMenuItem');
 const { addMenuItem } = require('../db/queries/menu/04_addMenuItem');
 const { deleteMenuItem } = require('../db/queries/menu/05_deleteMenuItem');
 const { getUserById, getUserByEmail } = require('../db/queries/users/getUser');
+const { getOwnerMenus } = require('../db/queries/menu/06_getOwnermenus');
 const db = require('../db/connection');
-const path = require('path');
 
 // USER ROUTES
 
@@ -62,6 +61,35 @@ router.get('/:id', (req, res) => {
 });
 
 // OWNER ROUTES
+
+// Retrieve the owner's menus
+router.get('/owner', (req, res) => {
+  const userId = req.session.userId;
+
+  // Call the getUserById function to get the user's information
+  getUserById(userId)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send('User not found');
+      } else if (user.restaurant_owner) {
+        // If the user is a restaurant owner, retrieve the owner's menus
+        getOwnerMenus(user.restaurant_id)
+          .then((menus) => {
+            res.render('ownerMenu', { menus, user });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send(`Internal server error: ${err.message}`);
+          });
+      } else {
+        res.status(403).send('Access denied: You are not a restaurant owner');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Internal server error: ${err.message}`);
+    });
+});
 
 // Edit a menu by ID
 router.post('/:id/edit', (req, res) => {
