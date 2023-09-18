@@ -1,10 +1,10 @@
 const db = require('../../connection');
 
-const getAllOrders = () => {
-  return db.query(`SELECT * FROM orders;`);
+const getAllMenuOrders = () => {
+  return db.query(`SELECT * FROM menu_orders;`);
 };
 
-module.exports = { getAllOrders };
+module.exports = { getAllMenuOrders };
 
 
 // Owner's Order Routes
