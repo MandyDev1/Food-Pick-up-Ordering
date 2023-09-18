@@ -8,7 +8,8 @@ const fetchData = (data) => {
 
   for(const menu of data) {
   const $menuItem = $(`
-      <h6>${menu.name}</h6>
+
+      <h5>${menu.name}</h5>
       <div class="food-photo"><img src="${menu.imgurl}" alt="${menu.category}"></div>
       <div class="food-photo">${menu.description}</div>
       <form class="food-details" method="POST" action="/cart">
@@ -37,6 +38,7 @@ const fetchData = (data) => {
                   <!-- </a> -->
                 </button>
             </form>
+   
 
   `);
     $menuItem.appendTo($menusList);
