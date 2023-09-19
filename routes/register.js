@@ -3,7 +3,7 @@ const router = express.Router();
 const registerUser = require('../db/queries/register/register');
 
 // Route for register submission
-router.post('/register', (req, res) => {
+router.post('/', (req, res) => {
   const user = req.body;
 
   registerUser(user)
@@ -13,7 +13,7 @@ error: err}));
 });
 
 // Route to go to register page
-router.get('/register', (req, res) => {
+router.get('/', (req, res) => {
   if (req.session.userId) {
     return res.redirect('/');
   }
