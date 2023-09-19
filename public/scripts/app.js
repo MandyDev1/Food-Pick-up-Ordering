@@ -196,8 +196,8 @@ const fetchCategory = (category) => {
 $(() => {
 
 
-  $('select').on('change', () => {
-    e.target.attr('selected', 'selected');
+  $('select').on('change', (e) => {
+    $(e.target).attr('selected', 'selected');
   });
 
   $.ajax({
@@ -288,13 +288,14 @@ $(() => {
         // console.log($(this.element).closest('.column').find('h6'));
         const mainColumn = $(e.target).closest('.column');
 
-        const mainForm = mainColumn.children('form');
+        const mainForm = $(mainColumn).find('form');
 
-        const productName = mainColumn.children('.namePrice').children('h6').text();
-        const productPrice = mainColumn.children('.namePrice').children('span').text().replace('$', '');
-        const menuId = mainColumn.children('form').children('input').val();
+        const productName = $(mainColumn).find('.namePrice').children('h6').text();
+        const productPrice = $(mainColumn).find('.namePrice').children('span').text().replace('$', '');
+        const menuId = $(mainForm).children('input').val();
 
-        const quantity = mainForm.children('.food-quantity').children('.dropdown-menu').children('select').val();
+        const quantity = $(mainForm).children('.food-quantity').children('.dropdown-menu').children('select').val();
+        console.log(quantity)
 
 
         // GET THE ALREADY STORED VALUES
