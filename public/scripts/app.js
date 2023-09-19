@@ -119,7 +119,7 @@ const fetchData = (page, records, totalCount, data) => {
       const $menuItem = $(`
           <div class="row">
             <div class="column">
-              <a class="food-photo" href="#"><img src="${menu.imgurl}" alt="${menu.category}"></a>
+              <a class="food-photo" href="menus/${menu.id}"><img src="${menu.imgurl}" alt="${menu.category}"></a>
               <div class="namePrice">
                 <h6>${menu.name}</h6>
                 <span>$${menu.price}</span>
