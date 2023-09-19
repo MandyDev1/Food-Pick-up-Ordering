@@ -8,23 +8,33 @@ router.get('/', (req, res) => {
     return res.redirect('/login');
   }
 
-  res.render('menus');
-});
-
-router.post('/', (req, res) => {
-  // Check if user is logged in
-  if (!req.session.user_id) {
-    return res.redirect('/login');
-  }
-
+  // menu: JSON.parse(localStorage.getItem('menus'))
   userQueries.getUserById(req.session.user_id)
       .then(data => {
-        const templateVars = {user: data};
+        const templateVars = {
+          user: data
+        };
+        // console.log(localStorage)
 
-        res.render('menus', templateVars);
+        res.render('cart', templateVars);
       })
       .catch(err => res.send(err));
 });
+
+// router.post('/', (req, res) => {
+//   // Check if user is logged in
+//   if (!req.session.user_id) {
+//     return res.redirect('/login');
+//   }
+
+//   userQueries.getUserById(req.session.user_id)
+//       .then(data => {
+//         const templateVars = {user: data};
+
+//         res.render('ordered', templateVars);
+//       })
+//       .catch(err => res.send(err));
+// });
 
 module.exports = router;
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Food Ordering Pick Up - Home Page</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="../styles/nav.css" type="text/css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="Your Logo">
+        </div>
+        <div class="login-signup">
+          <span class="welcome-msg">Welcome, <%= user.name %></span>
+          <button class="login-signup-button" id="login">
+            <a class="register-login" href="/logout">Log Out</a>
+          </button>
+          <button class="login-signup-button" id="signup">
+            <a class="register-login" href="/myOrder">My Order</a>
+          </button>
+          <!-- <button class="login-signup-button" id="signup"> -->
+            <!-- <a class="register-login" href="/cart">
+              <i class="fa-solid fa-cart-shopping">
+                <span class="cart-quantity"></span>
+              </i>
+            </a> -->
+          <!-- </button> -->
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+  <div class="main-order">
+    <a class="backToMenu" href="/menus">
+      <button class="menu-button">Menus</button>
+    </a>
+    <br>
+    <!-- <button class="place-order" id="my-order-history">My previous order</button> -->
+    <h3>My Order List</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Food name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+
+      </tfoot>
+    </table>
+    <form class="place-order" action="/cart" method="post">
+      <button type="submit" class="place-order" id="order-now-button">Place Order</button>
+    </form>
+  </div>
+
+</main>
+
+</body>
+
+</html>

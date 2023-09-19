@@ -4,5 +4,5 @@ CREATE TABLE menu_orders (
   id SERIAL PRIMARY KEY NOT NULL,
   order_id INTEGER REFERENCES  orders(id) ON DELETE CASCADE,
   menu_id INTEGER REFERENCES  menus(id) ON DELETE CASCADE,
-  quantity INTEGER
+  quantity INTEGER NOT NULL
 );

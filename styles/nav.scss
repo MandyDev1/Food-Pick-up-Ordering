@@ -125,9 +125,17 @@ a, a:hover {
   transform: scale(1.1);
 }
 
-.login-error-message {
+.namePrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.message {
   color: red;
-  border: 2px solid red;
   padding: 0.5em;
   text-align: center;
 }

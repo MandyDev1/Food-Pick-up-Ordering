@@ -37,10 +37,21 @@
 
 <main class="container">
   <% if (message) { %>
-  <span class="login-error message"><%= message %></span>
+  <span class="register-error message"><%= message %></span>
   <% } %>
-  <h3>Login</h3>
-      <form class="reset" method="POST" action="/login">
+  <h3>Registration Form</h3>
+      <form class="reset" method="POST" action="/register">
+        <div class="form-group mb-2">
+          <label for="name" class="form-label">Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            placeholder="name"
+            style="width: 300px; margin-bottom: 1em;"
+          />
+        </div>
+
         <div class="form-group mb-2">
           <label for="email" class="form-label">Email</label>
           <input
@@ -48,6 +59,17 @@
             type="email"
             name="email"
             placeholder="abc@example.com"
+            style="width: 300px; margin-bottom: 1em;"
+          />
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="phone" class="form-label">Phone</label>
+          <input
+            class="form-control"
+            type="text"
+            name="phone"
+            placeholder="0000000000"
             style="width: 300px; margin-bottom: 1em;"
           />
         </div>
@@ -62,7 +84,7 @@
             style="width: 300px; margin-bottom: 1em;"
           />
         </div>
-        <button type="submit" class="btn btn-primary loginBtn">Login</button>
+        <button type="submit" class="btn btn-primary register">Register</button>
       </form>
 </main>
 
