@@ -6,7 +6,7 @@ const { getOrderDetails } = require('../db/queries/order/03_getOrderDetails');
 const { editOrder } = require('../db/queries/order/04_editOrder');
 
 // Route to create an order
-router.get('/orders/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const userId = req.session.userId;
   const restaurantId = req.params.id;
   const { total, items } = req.body;
@@ -23,7 +23,7 @@ router.get('/orders/:id', (req, res) => {
 });
 
 // Route for owner to browse a list of orders
-router.get('/orders', (req, res) => {
+router.get('/', (req, res) => {
   // Call the getAllMenuOrders function to retrieve all menu orders
   getAllMenuOrders()
     .then((orders) => {
@@ -36,7 +36,7 @@ router.get('/orders', (req, res) => {
 });
 
 // Route for owner to view details about a particular order
-router.get('/orders/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const orderId = req.params.id;
 
   // Call the getOrderDetails function to retrieve details about the order
@@ -51,7 +51,7 @@ router.get('/orders/:id', (req, res) => {
 });
 
 // Route for owner to edit the status of an order
-router.post('/orders/owner/:id', (req, res) => {
+router.post('/owner/:id', (req, res) => {
   const orderId = req.params.id;
   const { newStatus, newPickupTime, newCompletedTime } = req.body;
 
