@@ -1,7 +1,21 @@
 const express = require('express');
 const router  = express.Router();
 const { getUserById } = require('../db/queries/users/getUser');
-const { getFoodsByIds } = require('../db/queries/menu/02_getItemById');
+const { getItemById } = require('../db/queries/menu/02_getItemById');
+
+router.post('/add', (req, res) => {
+  const menuItemId = req.body.id;
+  getItemById(menuItemId)
+    .then((item) => {
+      const newCartItem = { id: item.id, name: item.name, price: item.price, quantity: 1 };
+      if (!req.session.cart) {
+        req.session.cart = [];
+      }
+      req.session.cart.push(newCartItem);
+      console.log(req.session.cart);
+      res.redirect('/cart');
+    });
+});
 
 router.get('/', (req, res) => {
   const userId = req.session.userId;
@@ -11,45 +25,42 @@ router.get('/', (req, res) => {
     return res.redirect('/login');
   }
 
-  const cartContentString = req.session.cart || '{}';
-  const cartContentObject = JSON.parse(cartContentString);
-  const gatheredIds = Object.keys(cartContentObject);
-
-  if (gatheredIds.length === 0) {
-    return getUserById(userId)
-      .then((user) => {
-        res.render('cart', { user, cart: []});
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+  if (!req.session.cart) {
+    req.session.cart = [];
   }
 
-  getFoodsByIds(gatheredIds)
-    .then((foods) => {
-      const cart = [];
+  getUserById(req.session.userId)
+    .then((data) => {
+      const templateVar = { user: data, cart: req.session.cart };
 
-      for (const food of foods) {
-        const id = food.id;
-        const name = food.name;
-        const price = food.price;
-        const qty = cartContentObj[id];
-
-        const eachFood = { id, name, price, qantity };
-        cart.push(eachFood);
-      }
-
-      return getUserById(userId)
-        .then((user) => {
-          res.render("cart", { user, cart });
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err.message });
-        });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
+      res.render('cart', templateVar);
     });
+});
+
+router.post('/edit', (req, res) => {
+  const menuItemId = Number(req.body.id);
+  const menuItemQuantity = Number(req.body.quantity);
+
+  for (const cartItem of req.session.cart) {
+    if (cartItem.id === menuItemId) {
+      cartItem.quantity = menuItemQuantity;
+    }
+  }
+
+  res.redirect('/cart');
+});
+
+router.post('/delete', (req, res) => {
+  const menuItemId = Number(req.body.id);
+  let matchingIndex = false;
+  req.session.cart.forEach((element, index) => {
+    if (element.id === menuItemId) {
+      matchingIndex = index;
+    }
+  });
+  req.session.cart.splice(matchingIndex, 1);
+
+  res.redirect('/cart');
 });
 
 module.exports = router;

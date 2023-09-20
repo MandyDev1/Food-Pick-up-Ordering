@@ -2,7 +2,10 @@ const db = require('../../connection');
 
 const getItemById = (id) => {
   return db.query(`SELECT * FROM menus
-  WHERE id = $1;`, [id]);
+  WHERE id = $1;`, [id])
+  .then((result) => {
+    return result.rows[0];
+  })
 }
 
 module.exports = { getItemById }
