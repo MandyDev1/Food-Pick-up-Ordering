@@ -60,44 +60,47 @@
     </nav>
 </header>
 
-<main class="main-container">
-  <div class="food-details-page">
+<main class="main-container singlemenu">
+  <div class="column" id="food-details-page">
     <br>
     <a href="/menus"><button>Back to Menu Page</button></a>
     <br>
     <h1>Menu Details</h1>
     <div class="menu-details">
       <img class="menu-picture" src="<%= menu.imgurl %>" alt="<%= menu.category %>">
-      <div class="name-price">
-        <h6 class="menu-name"><%= menu.name %></h6>
-        <span class="menu-price"><%= menu.price %></span>
-      </div>
-      <div class="menu-description"></div>
-      <form class="food-details" method="POST" action="/cart">
-        <input type="hidden" name="menuId" value="<%= menu.id %>">
-        <div class="food-quantity">
-          <div class="quantity">Quantity:</div>
-          <div class="dropdown-menu">
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
+      <div>
+        <div class="namePrice">
+          <h6 class="menu-name"><%= menu.name %></h6>
+          <span class="menu-price">$<%= menu.price %></span>
+        </div>
+        <div class="menu-description"><%= menu.description %></div>
+        <form class="food-details" method="POST" action="/cart">
+          <input type="hidden" name="menuId" value="<%= menu.id %>">
+          <div class="food-quantity">
+            <div class="quantity">Quantity:</div>
+            <div class="dropdown-menu">
+              <select>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
           </div>
           <button class="order-button" type="submit">
-            <!--<a class="register-login order" href="/order"> -->
+              <!--<a class="register-login order" href="/order"> -->
             Order
-            <!-- </a> -->
+              <!-- </a> -->
           </button>
-      </form>
+        </form>
+
+      </div>
     </div>
   </div>
 

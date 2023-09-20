@@ -236,7 +236,7 @@ $(() => {
       $(this).parent().addClass('active');
       page = Number($(this)[0].text);
       // sessionStorage.setItem('test', $(this));
-
+      'cookie data', document.cookie
       // for (li of $(this).parent().parent().find('.page-item-numbers')) {
       //   $(li).removeClass('active');
       // }$('.page-item-numbers.active')
@@ -295,7 +295,7 @@ $(() => {
         const menuId = $(mainForm).children('input').val();
 
         const quantity = $(mainForm).children('.food-quantity').children('.dropdown-menu').children('select').val();
-        console.log(quantity)
+        // console.log(quantity)
 
 
         // GET THE ALREADY STORED VALUES
@@ -439,6 +439,25 @@ $(() => {
     })
     .catch(err => console.log(err));
 
+
+    // POST THE CART DATA
+    $('#order-now-button').on('click', () => {
+      const cartData = {};
+
+      for (tr of $('tbody tr')) {
+        cartData[$(tr).find('button').attr('data-id')] = {
+          name: $($(tr).find('td')[0]).text,
+          quantity: Number($(tr).find('select').val()),
+
+        }
+      }
+      cartData['total'] = $('tfoot').find('.total-price').text().replace('$', '');
+
+      // console.log(cartData);
+      $.post('/cart', cartData)
+        .then(data => data.json())
+        .catch(e => console.log(e));
+    });
 
   })
   .catch(err => {

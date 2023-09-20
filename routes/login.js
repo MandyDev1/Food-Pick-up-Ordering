@@ -38,7 +38,7 @@ router.post("/", (req, res) => {
         }
 
         const loginError = {message: 'Email or password is incorrect!!!'};
-        res.status(400).render('login', loginError);
+        res.status(400).send(req.session.user_id).render('login', loginError);
       }
     })
     .catch(err => {

@@ -55,6 +55,47 @@ nav {
   text-decoration: none;
 }
 
+#food-details-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  margin-bottom: 15em;
+  margin-top: 6em;
+}
+
+.menu-details {
+  margin-left: 12em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+}
+
+@media only screen and (max-width: 768px) {
+  .menu-details {
+    flex-direction: column;
+    margin: auto;
+  }
+  .opening-time span {
+    display: flex;
+  }
+
+  .menu-details img {
+    width: 100%
+  }
+}
+
+.menu-picture {
+  margin-right: 2em;
+}
+
+.singlemenu {
+  width: 100%;
+  margin-bottom: 14em;
+}
+
 .main-container {
   display: flex;
   flex-direction: row;

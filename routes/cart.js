@@ -21,7 +21,9 @@ router.get('/', (req, res) => {
       .catch(err => res.send(err));
 });
 
-// router.post('/', (req, res) => {
+router.post('/', (req, res) => {
+  console.log('session data', req.session);
+  console.log(req.body)
 //   // Check if user is logged in
 //   if (!req.session.user_id) {
 //     return res.redirect('/login');
@@ -34,7 +36,7 @@ router.get('/', (req, res) => {
 //         res.render('ordered', templateVars);
 //       })
 //       .catch(err => res.send(err));
-// });
+});
 
 module.exports = router;
 
