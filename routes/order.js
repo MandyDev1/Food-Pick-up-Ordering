@@ -65,3 +65,5 @@ router.post('/owner/:id', (req, res) => {
       res.status(500).send(`Internal server error: ${err.message}`);
     });
 });
+
+module.exports = router;

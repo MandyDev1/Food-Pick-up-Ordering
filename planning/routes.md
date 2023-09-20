@@ -68,4 +68,13 @@ D- GET /login
 - GET /logout
  - Redirect to main page.
 
+### Cart
+User’s cart view
+- Users can go to the cart page to see all the foods(from the menu) he just added to the cart: 
+the food’s name, 
+quantity for each food,
+price for each food,
+total foods count in the cart,
+Total price for all foods in the cart.
+- From there he can edit the quantity of one particular food, or delete any food if he doesn’t want to order anymore. 
 
