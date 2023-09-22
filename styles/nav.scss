@@ -65,6 +65,111 @@ nav {
   margin-top: 6em;
 }
 
+.all-order, #my-order {
+  width: 100%;
+}
+
+.all-order {
+  margin-bottom: 28em;
+  margin-top: 3em;
+}
+.back-button {
+  margin-bottom: 6px;
+}
+
+#my-order {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 4em;
+}
+
+#my-order table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main-order table {
+  table-layout: fixed;
+  width: 90%;
+  border-collapse: collapse;
+}
+
+.order-container table {
+  table-layout: fixed;
+  width: 90%;
+  border-collapse: collapse;
+  margin-left: 3em;
+}
+
+#my-order thead th:nth-child(1),
+.order-container thead th:nth-child(1) {
+  width: 15%;
+}
+
+.main-order thead th:nth-child(1),
+.order-container thead th:nth-child(2)  {
+  width: 50%;
+}
+
+#my-order thead th:nth-child(2) {
+  width: 40%;
+}
+
+.main-order thead th:nth-child(2) {
+  width: 10%;
+}
+
+#my-order thead th:nth-child(3) {
+  width: 20%;
+}
+
+.main-order thead th:nth-child(3) {
+  width: 10%;
+}
+
+.main-order thead th:nth-child(4) {
+  width: 10%;
+}
+
+#my-order thead th:nth-child(4) {
+  width: 10%;
+}
+
+tr:nth-child(even) {background-color: #6d7b8d;}
+tr:hover {background-color: #ddd;}
+
+td {
+  padding: 3px;
+
+}
+
+td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+  text-align: left;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+.final-order-page table, .final-order-page span {
+  margin-bottom: 1em;
+}
+
+.current-order {
+  width: 100%;
+}
+.current-order .main-order {
+  margin-left: 4em;
+  margin-top: -20em;
+}
+
 .menu-details {
   margin-left: 12em;
   display: flex;
