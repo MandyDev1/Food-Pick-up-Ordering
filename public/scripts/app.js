@@ -7,6 +7,7 @@
 // const Story = document.querySelector('#approvedList');
 // let page = 1, records = 16, totalCount = 0, search = '';
 
+
 const renderPagination = (page, records, totalCount) => {
   $('.page-item-numbers').remove();
 
@@ -14,7 +15,7 @@ const renderPagination = (page, records, totalCount) => {
 
   for (let i = 1; i <= pagesNumbers; i++) {
     // if (i === 2) {
-      $(`.pagination > li:nth-child(${i})`).after(`<li class="page-item page-item-numbers ${i == page ? 'active': ''}" ><a class="page-link" href="/menus">${i}</a></li>`);
+    $(`.pagination > li:nth-child(${i})`).after(`<li class="page-item page-item-numbers ${i == page ? 'active' : ''}" ><a class="page-link" href="/menus">${i}</a></li>`);
     // }
     // $(`.pagination > li:nth-child(${i})`).after(`<li class="page-item page-item-numbers ${i == page ? 'active': ''}" ><a class="page-link" href="/menus?page=${i}">${i}</a></li>`);
   }
@@ -59,7 +60,7 @@ const fetchOrderMenu = (data) => {
     );
 
     // SET QUANTITY SELECTED ON MENU PAGE AS SELECTED
-    $menu.find(`.cart-select option[value='${Number(data[id].quantity)}']`).attr("selected","selected");
+    $menu.find(`.cart-select option[value='${Number(data[id].quantity)}']`).attr("selected", "selected");
 
     $menu.appendTo($tableBody);
   }
@@ -81,7 +82,7 @@ const updateCartQuantity = () => {
 };
 
 const fetchOrderTotal = () => {
-  let totalAmount= 0;
+  let totalAmount = 0;
 
   const $tableRows = $('tbody tr');
 
@@ -102,21 +103,21 @@ const fetchOrderTotal = () => {
 const fetchData = (page, records, totalCount, data) => {
   // let page = 1, records = 16, totalCount = 0;
 
-    const $menusList = $('.row-main');
-    // const $address = $('.address-block');
-    $menusList.empty();
-    // $address.empty();
-    // renderPagination(page, totalCount, records);
-    renderPagination(page, records, totalCount);
+  const $menusList = $('.row-main');
+  // const $address = $('.address-block');
+  $menusList.empty();
+  // $address.empty();
+  // renderPagination(page, totalCount, records);
+  renderPagination(page, records, totalCount);
 
 
-    // ENSURE CART QUANTITY IS UNCHANGED
+  // ENSURE CART QUANTITY IS UNCHANGED
 
-    // $address.text(`${value.address}<br>${value.city}, ${value.province} ${value.postal_code}`);
+  // $address.text(`${value.address}<br>${value.city}, ${value.province} ${value.postal_code}`);
 
-    for(const menu of data.slice((page - 1) * records, page * records)) {
+  for (const menu of data.slice((page - 1) * records, page * records)) {
 
-      const $menuItem = $(`
+    const $menuItem = $(`
           <div class="row">
             <div class="column">
               <a class="food-photo" href="menus/${menu.id}"><img src="${menu.imgurl}" alt="${menu.category}"></a>
@@ -152,9 +153,9 @@ const fetchData = (page, records, totalCount, data) => {
             </div>
           </div>`);
 
-      $menuItem.appendTo($menusList);
+    $menuItem.appendTo($menusList);
 
-    }
+  }
 };
 
 // let prevVal = $('.cart-select').val();
@@ -163,14 +164,14 @@ const replaceSelection = () => {
 
     let selectedVal = $(tr).find('.cart-select').val();
 
-    $(tr).find('.cart-select > option').each(function(i, item) {
+    $(tr).find('.cart-select > option').each(function (i, item) {
       // if(item.value === prevVal) {
-        $(item).removeAttr("selected");
+      $(item).removeAttr("selected");
       // }
     })
 
-    $(tr).find('.cart-select > option').each(function(i, item) {
-      if(item.value === selectedVal) {
+    $(tr).find('.cart-select > option').each(function (i, item) {
+      if (item.value === selectedVal) {
         $(item).attr("selected", "true");
         prevVal = $(item).val();
       }
@@ -185,7 +186,7 @@ const fetchCategory = (category) => {
   for (const c of category) {
     const $catItem = $(`
         <a class="cat-item" href="#"><span id=${c.toLowerCase().split(" ").join("-")}><li>${c}</li></span></a>`)
-    ;
+      ;
 
     $catItem.appendTo($menuCat);
   }
@@ -204,67 +205,72 @@ $(() => {
     method: 'GET',
     url: '/api/menus'
   })
-  .then((response) => {
-    const totalCount = response.result;
+    .then((response) => {
+      const totalCount = response.result;
 
+      // Filter the menu to just a Specific Restaurant
+      const restaurantId = 1;  // This is for when the platform is refactored for multiple restaurants
 
-    const data = response.menus;
-    // const firstPageData = response.menus.slice(0,15);
+      // Store restaurant id for use Later
+      // sessionStorage.setItem('restaurantId', restaurantId);
 
-    const dataCategory = [];
+      const data = response.menus.filter(menu => menu.restaurant_id === restaurantId);
+      // const firstPageData = response.menus.slice(0,15);
 
-    for (const d of data) {
-      let newCat = d.category.split("-").map(el => el[0].toUpperCase() + el.slice(1)).join(" ");
-      if (!dataCategory.includes(newCat)) {
-        dataCategory.push(newCat);
+      const dataCategory = [];
+
+      for (const d of data) {
+        let newCat = d.category.split("-").map(el => el[0].toUpperCase() + el.slice(1)).join(" ");
+        if (!dataCategory.includes(newCat)) {
+          dataCategory.push(newCat);
+        }
       }
-    }
-    fetchCategory(dataCategory);
+      fetchCategory(dataCategory);
 
-    let page = 1, records = 16;
+      let page = 1, records = 16;
 
-    // Set Cart Quantity Back to Original Value
-    // $('.cart-quantity').text(localStorage.getItem('cartQuantity'));
-    $('.cart-quantity').text(sessionStorage.getItem('cartQuantity'));
+      // Set Cart Quantity Back to Original Value
+      // $('.cart-quantity').text(localStorage.getItem('cartQuantity'));
+      $('.cart-quantity').text(sessionStorage.getItem('cartQuantity'));
 
-    // Load Data to Page
-    fetchData(page, records, totalCount, data);
-
-    $('.page-item-numbers a').on('click', function() {
-      // console.log($(this).text());
-      $('.page-item-numbers.active').removeClass('active');
-      $(this).parent().addClass('active');
-      page = Number($(this)[0].text);
-      // sessionStorage.setItem('test', $(this));
-      'cookie data', document.cookie
-      // for (li of $(this).parent().parent().find('.page-item-numbers')) {
-      //   $(li).removeClass('active');
-      // }$('.page-item-numbers.active')
-      // console.log($(this));
+      // Load Data to Page
       fetchData(page, records, totalCount, data);
-      // console.log(page);
-      // console.log($(this));
-    });
 
-    // Previous Page
-    $('[aria-label="Previous"]').click(function() {
-      if (page > 1) {
-        page--;
-      }
-      fetchData(page, records, totalCount, data);
-    });
+      $('.page-item-numbers a').on('click', function () {
+        // console.log($(this).text());
+        $('.page-item-numbers.active').removeClass('active');
+        $(this).parent().addClass('active');
+        page = Number($(this)[0].text);
+        // sessionStorage.setItem('test', $(this));
+        // 'cookie data', document.cookie
+        // for (li of $(this).parent().parent().find('.page-item-numbers')) {
+        //   $(li).removeClass('active');
+        // }$('.page-item-numbers.active')
+        // console.log($(this));
+        fetchData(page, records, totalCount, data);
+        // console.log(page);
+        // console.log($(this));
+      });
 
-    // Next page
-    $('[aria-label="Next"]').click(function() {
-      if (page * records < totalCount) {
-        page++;
-      }
-      fetchData(page, records, totalCount, data);
-    });
+      // Previous Page
+      $('[aria-label="Previous"]').click(function () {
+        if (page > 1) {
+          page--;
+        }
+        fetchData(page, records, totalCount, data);
+      });
+
+      // Next page
+      $('[aria-label="Next"]').click(function () {
+        if (page * records < totalCount) {
+          page++;
+        }
+        fetchData(page, records, totalCount, data);
+      });
 
 
-    // Menu Category Shows only menu in that category
-    // $(document).on('click', 'a.cat-item', () => {
+      // Menu Category Shows only menu in that category
+      // $(document).on('click', 'a.cat-item', () => {
       //   // console.log('Yay')
       //   const $catName = $(this).children('span').attr('id');
       //   console.log($catName);
@@ -276,33 +282,53 @@ $(() => {
       // });
 
       // CHECK IF USER IS LOGGED IN
-    if ($('.welcome-msg')) {  // User is logged in if element is present
+      if ($('.welcome-msg')) {  // User is logged in if element is present
 
-      // ORDER BUTTON
-      $('.order-button').click((e) => {
-        e.preventDefault();
+        // ORDER BUTTON
+        $('.order-button').click((e) => {
+          e.preventDefault();
 
-        // console.log('cookie is:', $.cookie());
-        // console.log($(window.cookie === ''));
+          // console.log('cookie is:', $.cookie());
+          // console.log($(window.cookie === ''));
 
-        // console.log($(this.element).closest('.column').find('h6'));
-        const mainColumn = $(e.target).closest('.column');
+          // console.log($(this.element).closest('.column').find('h6'));
+          const mainColumn = $(e.target).closest('.column');
 
-        const mainForm = $(mainColumn).find('form');
+          const mainForm = $(mainColumn).find('form');
 
-        const productName = $(mainColumn).find('.namePrice').children('h6').text();
-        const productPrice = $(mainColumn).find('.namePrice').children('span').text().replace('$', '');
-        const menuId = $(mainForm).children('input').val();
+          const productName = $(mainColumn).find('.namePrice').children('h6').text();
+          const productPrice = $(mainColumn).find('.namePrice').children('span').text().replace('$', '');
+          const menuId = $(mainForm).children('input').val();
 
-        const quantity = $(mainForm).children('.food-quantity').children('.dropdown-menu').children('select').val();
-        // console.log(quantity)
+          const quantity = $(mainForm).children('.food-quantity').children('.dropdown-menu').children('select').val();
+          // console.log(quantity)
 
 
-        // GET THE ALREADY STORED VALUES
-        // console.log(Object.keys(JSON.parse(sessionStorage.getItem('menus'))).length);
-        if (!sessionStorage.getItem('menus') || !JSON.parse(sessionStorage.getItem('menus'))) {
-          // ADD THE NEW MENU TO IT
-          const menuStorage = {};
+          // GET THE ALREADY STORED VALUES
+          // console.log(Object.keys(JSON.parse(sessionStorage.getItem('menus'))).length);
+          if (!sessionStorage.getItem('menus') || !JSON.parse(sessionStorage.getItem('menus'))) {
+            // ADD THE NEW MENU TO IT
+            const menuStorage = {};
+
+            menuStorage[menuId] = {
+              id: menuId,
+              name: productName,
+              quantity,
+              price: productPrice
+            };
+            // menuStorage = JSON.parse(sessionStorage.getItem('menus'));
+
+
+            sessionStorage.setItem('menus', JSON.stringify(menuStorage));
+          }
+          const menuStorage = JSON.parse(sessionStorage.getItem('menus'));
+
+          // if(menuStorage[menuId]) {
+          //   menuStorage[menuId].quantity = Number(menuStorage[menuId].quantity) + Number(quantity);
+          //   // console.log(menuStorage[menuId])
+
+          //   sessionStorage.setItem('menus', JSON.stringify(menuStorage));
+          // }
 
           menuStorage[menuId] = {
             id: menuId,
@@ -310,159 +336,157 @@ $(() => {
             quantity,
             price: productPrice
           };
-          // menuStorage = JSON.parse(sessionStorage.getItem('menus'));
 
 
+          // Ensure Cart Quantity is Correct through different pages
+          if ($('.cart-quantity').text() === '') {
+            $('.cart-quantity').text(quantity);
+          } else {
+            $('.cart-quantity').text(Number(quantity) + Number($('.cart-quantity').text()));
+          }
+          // NEED TO ADD EACH MENU ON ORDER TO LOCAL STORAGE
+          // DISPLAY TO CART WHEN CART IS OPENED
+          // localStorage.setItem('menus', JSON.stringify(menuStorage));
+          // localStorage.setItem('cartQuantity', $('.cart-quantity').text());
           sessionStorage.setItem('menus', JSON.stringify(menuStorage));
-        }
-        const menuStorage = JSON.parse(sessionStorage.getItem('menus'));
+          sessionStorage.setItem('cartQuantity', $('.cart-quantity').text());
 
-        // if(menuStorage[menuId]) {
-        //   menuStorage[menuId].quantity = Number(menuStorage[menuId].quantity) + Number(quantity);
-        //   // console.log(menuStorage[menuId])
+          // console.log(localStorage)
 
-        //   sessionStorage.setItem('menus', JSON.stringify(menuStorage));
-        // }
-
-        menuStorage[menuId] = {
-          id: menuId,
-          name: productName,
-          quantity,
-          price: productPrice
-        };
-
-
-        // Ensure Cart Quantity is Correct through different pages
-        if ($('.cart-quantity').text() === '') {
-          $('.cart-quantity').text(quantity);
-        } else {
-          $('.cart-quantity').text(Number(quantity) + Number($('.cart-quantity').text()));
-        }
-        // NEED TO ADD EACH MENU ON ORDER TO LOCAL STORAGE
-        // DISPLAY TO CART WHEN CART IS OPENED
-        // localStorage.setItem('menus', JSON.stringify(menuStorage));
-        // localStorage.setItem('cartQuantity', $('.cart-quantity').text());
-        sessionStorage.setItem('menus', JSON.stringify(menuStorage));
-        sessionStorage.setItem('cartQuantity', $('.cart-quantity').text());
-
-        // console.log(localStorage)
-
-      });
-      // localStorage.removeItem('cartQuantity');
-    }
-
-    // LOGIN / REGISTER FORM
-    $(".btn-primary").on('click', () => {
-      $('reset')[0].reset();
-    });
-
-    // LOAD MENU FOR A ORDER
-    $.ajax({
-      method: 'GET',
-      url: '/cart'
-    })
-    .then(() => {
-
-      // const $orderData = JSON.parse(localStorage.getItem('menus'));
-      // const $cartQuantity = JSON.parse(localStorage.getItem('cartQuantity'));
-      const $orderData = JSON.parse(sessionStorage.getItem('menus'));
-      const $cartQuantity = JSON.parse(sessionStorage.getItem('cartQuantity'));
-      // Check if Cart is Empty
-      // if (localStorage.length === 0) {
-      if (!JSON.parse(sessionStorage.getItem('menus'))) {
-        const $pTag = $(`<p>`).text('Your Cart is Empty');
-
-        $('table').remove();
-        $('.place-order').remove();
-        $pTag.appendTo($('.main-order'));
+        });
+        // localStorage.removeItem('cartQuantity');
       }
 
-      // TABLE ELEMENT
-      // Set Cart Quantity
-      $('.cart-quantity').text($cartQuantity);
+      // LOGIN / REGISTER FORM
+      $(".btn-primary").on('click', () => {
+        $('reset')[0].reset();
+      });
 
-      fetchOrderMenu($orderData);
-      // fetchOrderTotal();
-
-      // Check if Quantity is adjusted
-      $('.cart-select').on('change', (e) => {
-        const $menuId = $(e.target).parent().parent().next().next().find('button').attr('data-id');
-
-        const sessionMenu = JSON.parse(sessionStorage.getItem('menus'));
-
-        // Change Quantity of menu in Session Storage
-        sessionMenu[$menuId].quantity = $(e.target).val();
-
-        sessionStorage.setItem('menus', JSON.stringify(sessionMenu));
-
-        updateCartQuantity();
-
-        // Remove the Old Total Row
-        $('.total').remove();
-
-        fetchOrderTotal();
+      // LOAD MENU FOR A ORDER
+      $.ajax({
+        method: 'GET',
+        url: '/cart'
       })
+        .then(() => {
 
-      // On clicking menu button
-      $('.menu-button').on('click', () => {
-        updateCartQuantity();
-      });
+          // const $orderData = JSON.parse(localStorage.getItem('menus'));
+          // const $cartQuantity = JSON.parse(localStorage.getItem('cartQuantity'));
+          const $orderData = JSON.parse(sessionStorage.getItem('menus'));
+          const $cartQuantity = JSON.parse(sessionStorage.getItem('cartQuantity'));
+          // Check if Cart is Empty
+          // if (localStorage.length === 0) {
+          if (!JSON.parse(sessionStorage.getItem('menus'))) {
+            const $pTag = $(`<p>`).text('Your Cart is Empty');
 
-      // Clicking the Delete Button Should Delete the item
-      $('.delete-menu-item').on('click', (e) => {
-        const menuId = $(e.target).attr('data-id');
+            $('table').remove();
+            $('.place-order').remove();
+            $pTag.appendTo($('.main-order'));
+          }
 
-        const sessionMenu = JSON.parse(sessionStorage.getItem('menus'));
+          // TABLE ELEMENT
+          // Set Cart Quantity
+          $('.cart-quantity').text($cartQuantity);
 
-        // Delete the item from the session menu
-        delete sessionMenu[menuId];
+          fetchOrderMenu($orderData);
+          // fetchOrderTotal();
 
-        console.log('Menu', sessionMenu);
-        sessionStorage.setItem('menus', JSON.stringify(sessionMenu));
-        // fetchOrderMenu(sessionMenu);
-        if (Object.keys(sessionMenu).length > 0) {
-          $('tbody').empty();
-          $('tfoot').empty()
-          fetchOrderMenu(sessionMenu);
-          updateCartQuantity();
-          location.reload();
-        } else {
-          const $pTag = $(`<p>`).text('Your Cart is Empty');
+          // Check if Quantity is adjusted
+          $('.cart-select').on('change', (e) => {
+            const $menuId = $(e.target).parent().parent().next().next().find('button').attr('data-id');
 
-          $('table').remove();
-          $('.place-order').remove();
-          $pTag.appendTo($('.main-order'));
-          updateCartQuantity();
+            const sessionMenu = JSON.parse(sessionStorage.getItem('menus'));
+
+            // Change Quantity of menu in Session Storage
+            sessionMenu[$menuId].quantity = $(e.target).val();
+
+            sessionStorage.setItem('menus', JSON.stringify(sessionMenu));
+
+            updateCartQuantity();
+
+            // Remove the Old Total Row
+            $('.total').remove();
+
+            fetchOrderTotal();
+          })
+
+          // On clicking menu button
+          $('.menu-button').on('click', () => {
+            updateCartQuantity();
+          });
+
+          // Clicking the Delete Button Should Delete the item
+          $('.delete-menu-item').on('click', (e) => {
+            const menuId = $(e.target).attr('data-id');
+
+            const sessionMenu = JSON.parse(sessionStorage.getItem('menus'));
+
+            // Delete the item from the session menu
+            delete sessionMenu[menuId];
+
+            console.log('Menu', sessionMenu);
+            sessionStorage.setItem('menus', JSON.stringify(sessionMenu));
+            // fetchOrderMenu(sessionMenu);
+            if (Object.keys(sessionMenu).length > 0) {
+              $('tbody').empty();
+              $('tfoot').empty()
+              fetchOrderMenu(sessionMenu);
+              updateCartQuantity();
+              location.reload();
+            } else {
+              const $pTag = $(`<p>`).text('Your Cart is Empty');
+
+              $('table').remove();
+              $('.place-order').remove();
+              $pTag.appendTo($('.main-order'));
+              updateCartQuantity();
+            }
+
+          });
+        })
+        .catch(err => console.log(err));
+
+
+      // POST THE CART DATA
+      $('#order-now-button').on('click', (e) => {
+        e.preventDefault();
+
+        const cartData = {};
+        const menuData = [];
+
+        for (tr of $('tbody tr')) {
+          menuData.push({
+            id: Number($(tr).find('button').attr('data-id')),
+            name: $($(tr).find('td')[0]).text(),
+            quantity: Number($(tr).find('select').val()),
+          })
         }
+        cartData['menus'] = menuData
+        cartData['total'] = Number($('tfoot').find('.total-price').text().replace('$', ''));
+        cartData['restaurantId'] = restaurantId;
 
+        // SEND DATA FROM THE CART TO THE SERVER
+        $.ajax({
+          type: 'POST',
+          url: '/order',
+          data: { data: cartData },
+          success: (response) => {
+            console.log('Server response');
+
+            $(location).attr('href', '/order');
+
+          },
+          error: (err) => {
+            console.error("Error:", err);
+          }
+        });
+
+        sessionStorage.clear();
       });
+
     })
-    .catch(err => console.log(err));
-
-
-    // POST THE CART DATA
-    $('#order-now-button').on('click', () => {
-      const cartData = {};
-
-      for (tr of $('tbody tr')) {
-        cartData[$(tr).find('button').attr('data-id')] = {
-          name: $($(tr).find('td')[0]).text,
-          quantity: Number($(tr).find('select').val()),
-
-        }
-      }
-      cartData['total'] = $('tfoot').find('.total-price').text().replace('$', '');
-
-      // console.log(cartData);
-      $.post('/cart', cartData)
-        .then(data => data.json())
-        .catch(e => console.log(e));
+    .catch(err => {
+      console.log('error in getting menus');
     });
-
-  })
-  .catch(err => {
-    console.log('error in getting menus');
-  });
 
 });
 
