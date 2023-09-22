@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieSession({
   name: "session",
   keys: ["key1", "key2"],
-  maxAge: 1 * 10 * 60 * 1000,
+  maxAge: 5 * 10 * 60 * 1000,
 }));
 
 // Separated Routes for each Resource
@@ -45,8 +45,14 @@ const menusRoutes = require('./routes/menus');
 const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 const registerRoutes = require('./routes/registration');
-const orderRoutes = require('./routes/cart');
+const cartRoutes = require('./routes/cart');
+const ordersRoutes = require('./routes/order');
 const singleMenuRoutes = require('./routes/singleMenu');
+const allUserOrderRoutes = require('./routes/myOrder');
+
+// OWNERS ROUTES
+const allRestaurantOrderRoutes = require('./routes/restaurant');
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -60,8 +66,14 @@ app.use('/menus', menusRoutes);
 app.use('/login', loginRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/register', registerRoutes);
-app.use('/cart', orderRoutes);
+app.use('/cart', cartRoutes);
+app.use('/order', ordersRoutes);
 app.use('/menus', singleMenuRoutes);
+app.use('/myOrder', allUserOrderRoutes);
+
+// OWNERS PAGES
+app.use('/restaurants/orders', allRestaurantOrderRoutes);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
