@@ -22,7 +22,7 @@
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-  <script defer src="/scripts/app.js"></script>
+  <!-- <script defer src="/scripts/app.js"></script> -->
 </head>
 
 <body>
@@ -37,7 +37,7 @@
             <button class="login-signup-button" id="login">
               <a class="register-login" href="/logout">Log Out</a>
             </button>
-            <button class="login-signup-button myorder" id="signup">
+            <button class="login-signup-button" id="signup">
               <a class="register-login" href="/myOrder">My Order</a>
             </button>
             <!-- <button class="login-signup-button" id="signup"> -->
@@ -46,7 +46,7 @@
                   <span class="cart-quantity"></span>
                 </i>
               </a>
-            <!-- </button> -->
+            </button>
           </div>
         <% } else { %>
           <div class="login-signup">
@@ -62,27 +62,32 @@
 </header>
 
 <main class="main-container">
-  <div class="row-container">
-    <div class="row-main">
+  <div class="row-container final-order-page">
+    <span>Thank you for trusting us with your Order<br> You will receive a text Confirmation Shortly</span>
+    <table>
+      <tbody>
+        <tr>
+          <td>Client's Name</td>
+          <td><%= user.name %></td>
+        </tr>
 
-    </div>
+        <tr>
+          <td>Phone Number</td>
+          <td><%= user.phone_number %></td>
+        </tr>
 
-    <!-- End of pagination-->
-    <!-- Pagination - Using maximum 16 items per page -->
-    <div aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous" id="Previous">
-            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next" id="Next">
-            <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-          </a>
-        </li>
-      </ul>
-    </div>
+        <tr>
+          <td>Order ID</td>
+          <td>ORD-<%= order.id %><%= Math.floor(Math.random() * (29999 - 19999 + 1)) + 19999 %></td>
+        </tr>
+
+        <tr>
+          <td>Order Status</td>
+          <td class="order-status"><%= order.status %></td>
+        </tr>
+
+      </tbody>
+    </table>
   </div>
 
 </main>

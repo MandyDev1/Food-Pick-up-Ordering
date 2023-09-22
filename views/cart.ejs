@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="../styles/nav.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -47,7 +47,7 @@
     </nav>
 </header>
 
-<main class="container">
+<main class="container current-order">
   <div class="main-order">
     <a class="backToMenu" href="/menus">
       <button class="menu-button">Menus</button>
@@ -64,13 +64,13 @@
           <th>Delete</th>
         </tr>
       </thead>
+      <form class="place-order" action="/order" method="post">
       <tbody>
       </tbody>
       <tfoot>
 
       </tfoot>
     </table>
-    <form class="place-order" action="/cart" method="post">
       <button type="submit" class="place-order" id="order-now-button">Place Order</button>
     </form>
   </div>

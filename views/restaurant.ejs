@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Restaurant - Home Page</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script defer src="/scripts/order.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="Your Logo">
+        </div>
+
+</header>
+
+<main class="restaurant-orders">
+  <div class="order-container">
+    <% if (orders.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="my-order-page">
+          <% for (const order of orders) { %>
+            <tr>
+
+              <td>
+                <a href="" data-id="<%= order.id %>">
+                  ORD-<%= order.id %><%= Math.floor(Math.random() * (29999 - 19999 + 1)) + 19999 %>
+                </a>
+              </td>
+              <td>
+                <%= new Date(order.order_time).toLocaleDateString('en-US',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                <span></span>
+                <%= new Date(order.order_time).toLocaleTimeString() %>
+              </td>
+              <td>$<%= order.total_price / 100 %></td>
+              <td>
+                <form action="/restaurants/orders/:id"  method="post">
+                  <button type="submit" class="order-accept-button" data-id-accept="<%= order.id %>">Accept</button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <% } else { %>
+          <p>Check Back Later. No Order has been placed!!</p>
+    <% } %>
+  </div>
+
+</main>
+
+
+</body>
+
+</html>

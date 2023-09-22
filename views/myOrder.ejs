@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="/styles/nav.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-  <script defer src="/scripts/app.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+  <!-- <script defer src="/scripts/app.js"></script> -->
 </head>
 
 <body>
@@ -37,16 +37,14 @@
             <button class="login-signup-button" id="login">
               <a class="register-login" href="/logout">Log Out</a>
             </button>
-            <button class="login-signup-button myorder" id="signup">
+            <!-- <button class="login-signup-button" id="signup">
               <a class="register-login" href="/myOrder">My Order</a>
-            </button>
-            <!-- <button class="login-signup-button" id="signup"> -->
+            </button> -->
               <a class="cart" href="/cart">
                 <i class="fa-solid fa-cart-shopping">
                   <span class="cart-quantity"></span>
                 </i>
               </a>
-            <!-- </button> -->
           </div>
         <% } else { %>
           <div class="login-signup">
@@ -61,28 +59,48 @@
     </nav>
 </header>
 
-<main class="main-container">
-  <div class="row-container">
-    <div class="row-main">
-
+<main class="main-container all-order">
+  <div class="column" id="my-order">
+    <div class="back-button">
+      <br>
+      <a href="/menus"><button>Back to Menu Page</button></a>
+      <br>
+      <div></div>
     </div>
+    <% if (orders.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Order Status</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="my-order-page">
+          <% for (const order of orders) { %>
+            <tr>
 
-    <!-- End of pagination-->
-    <!-- Pagination - Using maximum 16 items per page -->
-    <div aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous" id="Previous">
-            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next" id="Next">
-            <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-          </a>
-        </li>
-      </ul>
-    </div>
+              <td>ORD-<%= order.id %><%= Math.floor(Math.random() * (29999 - 19999 + 1)) + 19999 %></td>
+              <td>
+                <%= new Date(order.order_time).toLocaleDateString('en-US',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                <span></span>
+                <%= new Date(order.order_time).toLocaleTimeString() %>
+              </td>
+              <td><%= order.status %></td>
+              <td>$<%= order.total_price / 100 %></td>
+              <td>
+                <button>Reorder</button>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <% } else { %>
+          <p>You have no previous orders to show</p>
+    <% } %>
+
   </div>
 
 </main>
