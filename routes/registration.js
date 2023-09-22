@@ -41,7 +41,7 @@ router.post("/", (req, res) => {
           username: req.body.name,
           email: req.body.email,
           password: bcrypt.hashSync(req.body.password, 10),
-          phone_number: req.body.phone_number
+          phone_number: req.body.phone
         };
 
         // Add new user to database
