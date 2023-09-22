@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
+const orderQueries = require('../db/queries/orders');
 
 router.get('/', (req, res) => {
   // Check if user is logged in
@@ -21,22 +22,6 @@ router.get('/', (req, res) => {
       .catch(err => res.send(err));
 });
 
-router.post('/', (req, res) => {
-  console.log('session data', req.session);
-  console.log(req.body)
-//   // Check if user is logged in
-//   if (!req.session.user_id) {
-//     return res.redirect('/login');
-//   }
-
-//   userQueries.getUserById(req.session.user_id)
-//       .then(data => {
-//         const templateVars = {user: data};
-
-//         res.render('ordered', templateVars);
-//       })
-//       .catch(err => res.send(err));
-});
 
 module.exports = router;
 
